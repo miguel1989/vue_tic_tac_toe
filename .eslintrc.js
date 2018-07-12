@@ -4,10 +4,15 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaVersion: 7,
+    ecmaFeatures: {
+      impliedStrict: true
+    }
   },
   env: {
     browser: true,
+    es6: true
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: 'standard',
@@ -17,6 +22,9 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
+    'space-before-function-paren': ['off', 'always'],
+    'no-var': 2,
+    'eqeqeq': 2,
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
