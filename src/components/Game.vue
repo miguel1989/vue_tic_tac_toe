@@ -1,6 +1,6 @@
 <template>
   <div class="game">
-    <div v-if="board" class="row" v-for="row in BOARD_SIZE" :key="row">
+    <div class="row" v-for="row in BOARD_SIZE" :key="row">
       <div class="cell" v-for="col in BOARD_SIZE" :key="col" @click="onCellClick(row, col)">
         <div :class="getClassValue(row,col)"></div>
       </div>
@@ -9,46 +9,24 @@
 </template>
 
 <script>
-  const BOARD_SIZE = 3
-  const TOTAL_SIZE = BOARD_SIZE * BOARD_SIZE
+  import {BOARD_SIZE} from '../const'
+  import Game from '../Game'
+
   export default {
     name: 'Game',
     data() {
       return {
-        board: null,
+        game: new Game(),
         BOARD_SIZE: BOARD_SIZE
       }
     },
     methods: {
-      initBoard() {
-        this.board = new Array(TOTAL_SIZE)
-        for (let i = 0; i < TOTAL_SIZE; i++) {
-          this.board[i] = null
-        }
-      },
       onCellClick(row, col) {
-        row = row - 1
-        col = col - 1
-        let idx = row * BOARD_SIZE + col
-        this.board.splice(idx, 1, 'x')
+        this.game.onCellClick(row - 1, col - 1)
       },
       getClassValue(row, col) {
-        row = row - 1
-        col = col - 1
-        console.log(`row = ${row}, col = ${col}`)
-        let idx = row * BOARD_SIZE + col
-        let cell = this.board[idx]
-        if (cell === 'x') {
-          return 'fa fa-times'
-        }
-        if (cell === 'o') {
-          return 'far fa-circle'
-        }
-        return ''
+        return this.game.getCellVal(row - 1, col - 1)
       }
-    },
-    mounted() {
-      this.initBoard()
     }
   }
 </script>
