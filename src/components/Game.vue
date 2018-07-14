@@ -2,7 +2,7 @@
   <div class="game">
     <div class="row" v-for="row in BOARD_SIZE" :key="row">
       <div class="cell" v-for="col in BOARD_SIZE" :key="col" @click="onCellClick(row, col)">
-        <div :class="getClassValue(row,col)"></div>
+        <div :class="getCellClassValue(row,col)"></div>
       </div>
     </div>
   </div>
@@ -22,10 +22,10 @@
     },
     methods: {
       onCellClick(row, col) {
-        this.game.onCellClick(row - 1, col - 1)
+        this.game.placeValue(row - 1, col - 1)
       },
-      getClassValue(row, col) {
-        return this.game.getCellVal(row - 1, col - 1)
+      getCellClassValue(row, col) {
+        return this.game.getCellSymbol(row - 1, col - 1)
       }
     }
   }
