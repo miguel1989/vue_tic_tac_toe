@@ -1,34 +1,27 @@
-import {BOARD_SIZE, TOTAL_SIZE} from './const'
+import {BOARD_SIZE, TOTAL_SIZE, SYMBOL_CLASS_MAP, SYMBOL_VALUES} from './const'
 
-const VALUES = ['x', 'o', 'q']
-const CLASS_MAP = {
-  'x': 'fa fa-times',
-  'o': 'far fa-circle',
-  'q': 'fas fa-transgender'
-}
 export default class Game {
   constructor(playerCount = 2) {
-    if (playerCount < 2) {
+    if (playerCount < 2 || playerCount > SYMBOL_VALUES.length) {
       playerCount = 2
     }
     this.cells = new Array(TOTAL_SIZE)
     this.playerCount = playerCount
-    this.availableValues = VALUES.slice(0, playerCount)
+    this.availableValues = SYMBOL_VALUES.slice(0, playerCount)
     this.nextValue = this.availableValues[0]
     this.initCells()
   }
 
   onCellClick(row, col) {
-    console.log(row)
     let idx = row * BOARD_SIZE + col
     if (this.cells[idx]) {
       return
     }
     this.cells.splice(idx, 1, this.nextValue)
-    this.getNextValue()
+    this.calcNextValue()
   }
 
-  getNextValue() {
+  calcNextValue() {
     let idxOfCurrentValue = this.availableValues.indexOf(this.nextValue)
     let possibleValues = this.availableValues.slice(idxOfCurrentValue + 1)
     if (possibleValues.length > 0) {
@@ -38,11 +31,37 @@ export default class Game {
     }
   }
 
+  checkIfGameEnded() {
+    // for each symbol:
+    // check each line horizontally
+    // check each line vertically
+    // check each line diagonally
+    // let self = this
+    this.availableValues.forEach(symbol => {
+
+    })
+  }
+
+  checkHorizontally(symbol) {
+    let result = false
+    for (let j = 0; j < BOARD_SIZE; j++) {
+      let count = 0
+      for (let i = 0; i < BOARD_SIZE; i++) {
+        let idx = j * BOARD_SIZE + i
+        if (this.cells[idx] === symbol) {
+          count++
+        }
+      }
+      result = count === BOARD_SIZE || result
+    }
+    return result
+  }
+
   getCellVal(row, col) {
     let idx = row * BOARD_SIZE + col
     let cell = this.cells[idx]
-    if (CLASS_MAP[cell]) {
-      return CLASS_MAP[cell]
+    if (SYMBOL_CLASS_MAP[cell]) {
+      return SYMBOL_CLASS_MAP[cell]
     }
     return ''
   }
