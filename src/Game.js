@@ -45,16 +45,51 @@ export default class Game {
   checkHorizontally(symbol) {
     let result = false
     for (let j = 0; j < BOARD_SIZE; j++) {
-      let count = 0
-      for (let i = 0; i < BOARD_SIZE; i++) {
-        let idx = j * BOARD_SIZE + i
-        if (this.cells[idx] === symbol) {
-          count++
-        }
-      }
-      result = count === BOARD_SIZE || result
+      let idx = j * BOARD_SIZE
+      let row = this.cells.slice(idx, idx + BOARD_SIZE)
+      result = this.checkRow(row, symbol) || result
     }
     return result
+  }
+
+  checkVertically(symbol) {
+    let result = false
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      let row = []
+      for (let j = 0; j < BOARD_SIZE; j++) {
+        let idx = j * BOARD_SIZE + i
+        row.push(this.cells[idx])
+      }
+      result = this.checkRow(row, symbol) || result
+    }
+    return result
+  }
+
+  checkDiagonally(symbol) {
+    let result = false
+    let idxLeft = 0
+    let idxRight = BOARD_SIZE - 1
+    let rowLeft = []
+    let rowRight = []
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      rowLeft.push(this.cells[idxLeft])
+      rowRight.push(this.cells[idxRight])
+      idxLeft += BOARD_SIZE + 1
+      idxRight += BOARD_SIZE - 1
+    }
+    result = this.checkRow(rowLeft, symbol) || result
+    result = this.checkRow(rowRight, symbol) || result
+    return result
+  }
+
+  checkRow(row, symbol) {
+    let count = 0
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      if (row[i] === symbol) {
+        count++
+      }
+    }
+    return count === BOARD_SIZE
   }
 
   getCellVal(row, col) {
