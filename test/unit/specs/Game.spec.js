@@ -1,5 +1,5 @@
 import Game from '@/Game'
-
+// http://www.chaijs.com/api/bdd/
 describe('Game private logic for 2 players, board 3x3', () => {
   let game
   beforeEach(() => {
@@ -65,7 +65,7 @@ describe('Game private logic for 2 players, board 3x3', () => {
   })
   it('should checkDiagonally "x" true & "o" false', () => {
     let row1 = ['o', 'o', 'x']
-    let row2 = ['0', 'x', 'o']
+    let row2 = ['o', 'x', 'o']
     let row3 = ['x', 'o', 'o']
     game.cells = row1.concat(row2, row3)
     expect(game._checkDiagonally('o')).to.equal(false)
@@ -79,5 +79,18 @@ describe('Game private logic for 2 players, board 3x3', () => {
     expect(game.nextValue).to.equal('x')
     game._calcNextValue()
     expect(game.nextValue).to.equal('o')
+  })
+  it('should getCellSymbol correctly', () => {
+    let row1 = [null, 'o', 'x']
+    let row2 = ['q', 'z', 'a']
+    let row3 = ['w', null, null]
+    game.cells = row1.concat(row2, row3)
+    expect(game.getCellSymbol(0, 0)).to.equal('')
+    expect(game.getCellSymbol(0, 1)).to.equal('far fa-circle')
+    expect(game.getCellSymbol(0, 2)).to.equal('fa fa-times')
+    expect(game.getCellSymbol(1, 0)).to.equal('fas fa-transgender')
+    expect(game.getCellSymbol(1, 1)).to.equal('fas fa-puzzle-piece')
+    expect(game.getCellSymbol(1, 2)).to.equal('fab fa-amazon')
+    expect(game.getCellSymbol(2, 0)).to.equal('')
   })
 })

@@ -1,5 +1,5 @@
 import Game from '@/Game'
-
+// http://www.chaijs.com/api/bdd/
 describe('Game simulation (kind of integration test)', () => {
   let game
   beforeEach(() => {
