@@ -19,6 +19,10 @@ describe('Game private logic for 2 players, board 3x3', () => {
     expect(game.placeValue(5, 5)).to.equal(false)
     expect(game.nextValue).to.equal('x')
   })
+  it('should placeValue to negative row & col correctly', () => {
+    expect(game.placeValue(-5, -5)).to.equal(false)
+    expect(game.nextValue).to.equal('x')
+  })
   it('should checkHorizontally "x" false & "o" true', () => {
     let row1 = ['x', 'o', 'x']
     let row2 = ['o', 'o', 'o']

@@ -19,14 +19,14 @@ export default class Game {
       return false
     }
     let idx = row * BOARD_SIZE + col
-    if (idx >= TOTAL_SIZE) {
+    if (idx < 0 || idx >= TOTAL_SIZE) {
       return false
     }
     if (this.cells[idx]) {
       return false
     }
     this.cells.splice(idx, 1, this.nextValue)
-    this.isFinished = this._isEnded()
+    this.isFinished = this._isFinished()
     this._calcNextValue()
     return true
   }
@@ -41,7 +41,7 @@ export default class Game {
     }
   }
 
-  _isEnded() {
+  _isFinished() {
     for (let i = 0; i < this.availableValues.length - 1; i++) {
       let symbol = this.availableValues[i]
       if (this._checkHorizontally(symbol) || this._checkVertically(symbol) || this._checkDiagonally(symbol)) {
