@@ -3,7 +3,8 @@
     <div class="welcome-header">Welcome to TIC TAC TOE Vue Game</div>
     <div class="select-header">Select your game</div>
     <div class="game-options">
-      <div class="game-option" @click="startGame">2 Players. Board 3x3</div>
+      <div class="game-option" @click="startGame2x3">2 Players. Board 3x3</div>
+      <div class="game-option" @click="startGame2x4">2 Players. Board 4x4</div>
       <div class="game-option" @click="startGame3x3">3 Players. Board 3x3</div>
     </div>
   </div>
@@ -12,8 +13,11 @@
   export default {
     name: 'Welcome',
     methods: {
-      startGame() {
+      startGame2x3() {
         this.$emit('start-game', 2, 3)
+      },
+      startGame2x4() {
+        this.$emit('start-game', 2, 4)
       },
       startGame3x3() {
         this.$emit('start-game', 3, 3)

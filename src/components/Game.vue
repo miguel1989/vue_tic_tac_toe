@@ -1,19 +1,25 @@
 <template>
-  <div  class="game">
-    <div class="row" v-for="row in BOARD_SIZE" :key="row">
-      <div class="cell" v-for="col in BOARD_SIZE" :key="col" @click="onCellClick(row, col)">
-        <div :class="getCellClassValue(row,col)"></div>
-      </div>
-    </div>
+  <div class="game">
+    <Board v-if="!game.isFinished"
+           :game="game"
+           :board-size="boardSize"/>
+    <FinishScreen v-if="game.isFinished"
+                  :game="game"
+                  @end-game="endGame"/>
   </div>
 </template>
 
 <script>
-  import {BOARD_SIZE} from '../const'
   import Game from '../Game'
+  import Board from './Board'
+  import FinishScreen from './FinishScreen'
 
   export default {
     name: 'Game',
+    components: {
+      Board,
+      FinishScreen
+    },
     props: {
       playerCount: {
         type: Number,
@@ -28,16 +34,12 @@
     },
     data() {
       return {
-        game: new Game(this.playerCount, this.boardSize),
-        BOARD_SIZE: BOARD_SIZE
+        game: new Game(this.playerCount, this.boardSize)
       }
     },
     methods: {
-      onCellClick(row, col) {
-        this.game.placeValue(row - 1, col - 1)
-      },
-      getCellClassValue(row, col) {
-        return this.game.getCellSymbol(row - 1, col - 1)
+      endGame() {
+        this.$emit('end-game')
       }
     }
   }
@@ -45,29 +47,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .game {
-    width: 400px;
-    height: 400px;
-    /*border: 1px solid black;*/
-    display: flex;
-    flex-direction: column;
-    background-color: #80CBC4;
-    padding: 4px;
-  }
 
-  .row {
-    flex: 1;
-    display: flex;
-  }
-
-  .cell {
-    margin: 4px;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #E0F2F1;
-    border-radius: 4px;
-    font-size: 42px;
-  }
 </style>

@@ -1,12 +1,17 @@
-import {BOARD_SIZE, TOTAL_SIZE, SYMBOL_CLASS_MAP, SYMBOL_VALUES} from './const'
+import {SYMBOL_CLASS_MAP, SYMBOL_VALUES} from './const'
 
 export default class Game {
-  constructor(playerCount = 2) {
+  constructor(playerCount = 2, boardSize = 3) {
     if (playerCount < 2 || playerCount > SYMBOL_VALUES.length) {
       playerCount = 2
     }
-    this.cells = new Array(TOTAL_SIZE)
+    if (boardSize < 3) {
+      boardSize = 3
+    }
     this.playerCount = playerCount
+    this.boardSize = boardSize
+    this.totalSize = boardSize * boardSize
+    this.cells = new Array(this.totalSize)
     this.availableValues = SYMBOL_VALUES.slice(0, playerCount)
     this.nextValue = this.availableValues[0]
     this.isFinished = false
@@ -18,8 +23,8 @@ export default class Game {
     if (this.isFinished) {
       return false
     }
-    let idx = row * BOARD_SIZE + col
-    if (idx < 0 || idx >= TOTAL_SIZE) {
+    let idx = row * this.boardSize + col
+    if (idx < 0 || idx >= this.totalSize) {
       return false
     }
     if (this.cells[idx]) {
@@ -56,9 +61,9 @@ export default class Game {
 
   _checkHorizontally(symbol) {
     let result = false
-    for (let j = 0; j < BOARD_SIZE; j++) {
-      let idx = j * BOARD_SIZE
-      let row = this.cells.slice(idx, idx + BOARD_SIZE)
+    for (let j = 0; j < this.boardSize; j++) {
+      let idx = j * this.boardSize
+      let row = this.cells.slice(idx, idx + this.boardSize)
       result = this._checkRow(row, symbol) || result
     }
     return result
@@ -66,10 +71,10 @@ export default class Game {
 
   _checkVertically(symbol) {
     let result = false
-    for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let i = 0; i < this.boardSize; i++) {
       let row = []
-      for (let j = 0; j < BOARD_SIZE; j++) {
-        let idx = j * BOARD_SIZE + i
+      for (let j = 0; j < this.boardSize; j++) {
+        let idx = j * this.boardSize + i
         row.push(this.cells[idx])
       }
       result = this._checkRow(row, symbol) || result
@@ -79,30 +84,30 @@ export default class Game {
 
   _checkDiagonally(symbol) {
     let idxLeft = 0
-    let idxRight = BOARD_SIZE - 1
+    let idxRight = this.boardSize - 1
     let rowLeft = []
     let rowRight = []
-    for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let i = 0; i < this.boardSize; i++) {
       rowLeft.push(this.cells[idxLeft])
       rowRight.push(this.cells[idxRight])
-      idxLeft += BOARD_SIZE + 1
-      idxRight += BOARD_SIZE - 1
+      idxLeft += this.boardSize + 1
+      idxRight += this.boardSize - 1
     }
     return this._checkRow(rowLeft, symbol) || this._checkRow(rowRight, symbol)
   }
 
   _checkRow(row, symbol) {
     let count = 0
-    for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let i = 0; i < this.boardSize; i++) {
       if (row[i] === symbol) {
         count++
       }
     }
-    return count === BOARD_SIZE
+    return count === this.boardSize
   }
 
   getCellSymbol(row, col) {
-    let idx = row * BOARD_SIZE + col
+    let idx = row * this.boardSize + col
     let cell = this.cells[idx]
     if (SYMBOL_CLASS_MAP[cell]) {
       return SYMBOL_CLASS_MAP[cell]
@@ -111,7 +116,7 @@ export default class Game {
   }
 
   _initCells() {
-    for (let i = 0; i < TOTAL_SIZE; i++) {
+    for (let i = 0; i < this.totalSize; i++) {
       this.cells[i] = null
     }
   }
