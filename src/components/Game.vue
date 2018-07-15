@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div  class="game">
     <div class="row" v-for="row in BOARD_SIZE" :key="row">
       <div class="cell" v-for="col in BOARD_SIZE" :key="col" @click="onCellClick(row, col)">
         <div :class="getCellClassValue(row,col)"></div>
@@ -14,9 +14,21 @@
 
   export default {
     name: 'Game',
+    props: {
+      playerCount: {
+        type: Number,
+        required: false,
+        default: 2
+      },
+      boardSize: {
+        type: Number,
+        required: false,
+        default: 3
+      }
+    },
     data() {
       return {
-        game: new Game(),
+        game: new Game(this.playerCount, this.boardSize),
         BOARD_SIZE: BOARD_SIZE
       }
     },

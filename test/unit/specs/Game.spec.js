@@ -71,4 +71,13 @@ describe('Game private logic for 2 players, board 3x3', () => {
     expect(game._checkDiagonally('o')).to.equal(false)
     expect(game._checkDiagonally('x')).to.equal(true)
   })
+  it('should _calcNextValue', () => {
+    expect(game.nextValue).to.equal('x')
+    game._calcNextValue()
+    expect(game.nextValue).to.equal('o')
+    game._calcNextValue()
+    expect(game.nextValue).to.equal('x')
+    game._calcNextValue()
+    expect(game.nextValue).to.equal('o')
+  })
 })

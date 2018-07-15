@@ -4,19 +4,42 @@
     </header>
     <main>
       <div><img src="./assets/logo.png" alt="Vue.js PWA"></div>
-      <Game/>
+      <Welcome v-if="!isGameStarted" @start-game="startGame"/>
+      <Game v-if="isGameStarted"
+            :player-count="playerCount"
+            :board-size="boardSize"
+            @end-game="endGame"/>
     </main>
   </div>
 </template>
 
 <script>
   import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
+  import Welcome from './components/Welcome'
   import Game from './components/Game'
 
   export default {
     name: 'app',
     components: {
-      Game
+      Game,
+      Welcome
+    },
+    data() {
+      return {
+        isGameStarted: false,
+        playerCount: 2,
+        boardSize: 3
+      }
+    },
+    methods: {
+      startGame(playerCount = 2, boardSize = 3) {
+        this.playerCount = playerCount
+        this.boardSize = boardSize
+        this.isGameStarted = true
+      },
+      endGame() {
+        this.isGameStarted = false
+      }
     }
   }
 </script>

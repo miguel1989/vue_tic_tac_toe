@@ -42,7 +42,7 @@ export default class Game {
   }
 
   _isFinished() {
-    for (let i = 0; i < this.availableValues.length - 1; i++) {
+    for (let i = 0; i < this.availableValues.length; i++) {
       let symbol = this.availableValues[i]
       if (this._checkHorizontally(symbol) || this._checkVertically(symbol) || this._checkDiagonally(symbol)) {
         this.winnerSymbol = symbol

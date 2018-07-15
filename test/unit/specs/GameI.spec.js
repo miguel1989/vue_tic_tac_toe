@@ -38,4 +38,33 @@ describe('Game simulation (kind of integration test)', () => {
     expect(game.winnerSymbol).to.equal('x')
     expect(game.nextValue).to.equal('o')
   })
+  it('should fast end game, and the winner will be "o"', () => {
+    expect(game.nextValue).to.equal('x')
+    expect(game.playerCount).to.equal(2)
+    expect(game.placeValue(0, 0)).to.equal(true) // x
+    expect(game.placeValue(1, 0)).to.equal(true) // o
+    expect(game.placeValue(0, 1)).to.equal(true) // x
+    expect(game.placeValue(1, 1)).to.equal(true) // o
+    expect(game.placeValue(2, 1)).to.equal(true) // x
+    expect(game.placeValue(1, 2)).to.equal(true) // o
+    expect(game.isFinished).to.equal(true)
+    expect(game.winnerSymbol).to.equal('o')
+    expect(game.nextValue).to.equal('x')
+  })
+  it('should end game, no one wins', () => {
+    expect(game.nextValue).to.equal('x')
+    expect(game.playerCount).to.equal(2)
+    expect(game.placeValue(1, 1)).to.equal(true) // x
+    expect(game.placeValue(1, 0)).to.equal(true) // o
+    expect(game.placeValue(0, 0)).to.equal(true) // x
+    expect(game.placeValue(2, 2)).to.equal(true) // o
+    expect(game.placeValue(2, 0)).to.equal(true) // x
+    expect(game.placeValue(0, 2)).to.equal(true) // o
+    expect(game.placeValue(0, 1)).to.equal(true) // x
+    expect(game.placeValue(2, 1)).to.equal(true) // o
+    expect(game.placeValue(1, 2)).to.equal(true) // x
+    expect(game.isFinished).to.equal(true)
+    expect(game.winnerSymbol).to.equal('')
+    expect(game.nextValue).to.equal('o')
+  })
 })
