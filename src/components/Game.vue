@@ -4,7 +4,7 @@
            :game="game"
            :board-size="boardSize"/>
     <div class="next-turn-wrap" v-if="!game.isFinished">
-      <div>Next turn is:</div>
+      <div class="next-turn-text">Next turn is:</div>
       <div class="icon" :class="nextSymbolClassValue"></div>
     </div>
     <FinishScreen v-if="game.isFinished"
