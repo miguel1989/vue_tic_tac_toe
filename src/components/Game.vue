@@ -55,12 +55,13 @@
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style lang="scss">
  .next-turn-wrap {
    margin-top: 8px;
    display: flex;
- }
- .next-turn-wrap .icon {
-   margin-left: 4px;
+
+   .icon {
+     margin-left: 4px;
+   }
  }
 </style>

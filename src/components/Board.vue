@@ -38,16 +38,32 @@
     }
   }
 </script>
-<style>
+<style lang="scss">
+  @import '../scss/variables.scss';
   .board {
-    width: 400px;
-    height: 400px;
+    width: $board-size;
+    height: $board-size;
     /*border: 1px solid black;*/
     display: flex;
     flex-direction: column;
-    background-color: #80CBC4;
+    background-color: $main-bg-color;
     padding: 4px;
     font-size: 80px;
+
+    .row {
+      flex: 1;
+      display: flex;
+    }
+
+    .cell {
+      margin: 4px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #E0F2F1;
+      border-radius: 4px;
+    }
   }
 
   .board.cells4 {
@@ -60,20 +76,5 @@
 
   .board.cells6 {
     font-size: 40px;
-  }
-
-  .row {
-    flex: 1;
-    display: flex;
-  }
-
-  .cell {
-    margin: 4px;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #E0F2F1;
-    border-radius: 4px;
   }
 </style>

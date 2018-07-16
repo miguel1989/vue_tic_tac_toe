@@ -33,11 +33,12 @@
     }
   }
 </script>
-<style>
+<style lang="scss">
+  @import '../scss/variables.scss';
   .finish-screen {
-    width: 400px;
-    height: 400px;
-    background-color: #80CBC4;
+    width: $board-size;
+    height: $board-size;
+    background-color: $main-bg-color;
     padding: 4px;
     font-size: 24px;
     display: flex;
@@ -49,10 +50,10 @@
   .win-screen {
     display: flex;
     align-items: center;
-  }
 
-  .win-screen .icon {
-    margin-right: 4px;
+    .icon {
+      margin-right: 4px;
+    }
   }
 
   .back-btn {
