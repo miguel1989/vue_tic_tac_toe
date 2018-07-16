@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div class="board" :class="boardClass">
     <div class="row" v-for="row in boardSize" :key="row">
       <div class="cell" v-for="col in boardSize" :key="col" @click="onCellClick(row, col)">
         <div :class="getCellClassValue(row,col)"></div>
@@ -9,6 +9,7 @@
 </template>
 <script>
   import Game from '../Game'
+
   export default {
     name: 'Board',
     props: {
@@ -20,6 +21,11 @@
         type: Number,
         required: true,
         default: 3
+      }
+    },
+    computed: {
+      boardClass() {
+        return `cells${this.boardSize}`
       }
     },
     methods: {
@@ -41,6 +47,19 @@
     flex-direction: column;
     background-color: #80CBC4;
     padding: 4px;
+    font-size: 80px;
+  }
+
+  .board.cells4 {
+    font-size: 60px;
+  }
+
+  .board.cells5 {
+    font-size: 50px;
+  }
+
+  .board.cells6 {
+    font-size: 40px;
   }
 
   .row {
@@ -56,6 +75,5 @@
     align-items: center;
     background-color: #E0F2F1;
     border-radius: 4px;
-    font-size: 42px;
   }
 </style>

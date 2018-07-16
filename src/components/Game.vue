@@ -3,9 +3,9 @@
     <Board v-if="!game.isFinished"
            :game="game"
            :board-size="boardSize"/>
-    <div v-if="!game.isFinished">
+    <div class="next-turn-wrap" v-if="!game.isFinished">
       <div>Next turn is:</div>
-      <div :class="nextSymbolClassValue"></div>
+      <div class="icon" :class="nextSymbolClassValue"></div>
     </div>
     <FinishScreen v-if="game.isFinished"
                   :game="game"
@@ -56,5 +56,11 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
+ .next-turn-wrap {
+   margin-top: 8px;
+   display: flex;
+ }
+ .next-turn-wrap .icon {
+   margin-left: 4px;
+ }
 </style>
