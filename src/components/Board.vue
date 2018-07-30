@@ -1,8 +1,12 @@
 <template>
   <div class="board" :class="boardClass">
     <div class="row" v-for="row in boardSize" :key="row">
-      <div class="cell" v-for="col in boardSize" :key="col" @click="onCellClick(row, col)">
-        <div :class="getCellClassValue(row,col)"></div>
+      <div class="cell"
+           v-for="col in boardSize"
+           :class="cellClass"
+           :key="col"
+           @click="onCellClick(row, col)">
+        <div :class="getSymbolClass(row,col)"></div>
       </div>
     </div>
   </div>
@@ -23,16 +27,35 @@
         default: 3
       }
     },
+    data() {
+      return {
+        newCellRowIdx: -1,
+        newCellColIdx: -1
+      }
+    },
     computed: {
       boardClass() {
         return `cells${this.boardSize}`
+      },
+      cellClass() {
+        console.log('getCellClass')
+        if (this.newCellRowIdx >= 0 && this.newCellColIdx >= 0) {
+          return 'new'
+        }
+        return ''
       }
     },
     methods: {
       onCellClick(row, col) {
-        this.game.placeValue(row - 1, col - 1)
+        this.newCellRowIdx = -1
+        this.newCellColIdx = -1
+        if (this.game.placeValue(row - 1, col - 1)) {
+          this.newCellRowIdx = row
+          this.newCellColIdx = col
+        }
       },
-      getCellClassValue(row, col) {
+      getSymbolClass(row, col) {
+        console.log('getSymbolClass1')
         return this.game.getCellSymbol(row - 1, col - 1)
       }
     }
@@ -63,6 +86,24 @@
       align-items: center;
       background-color: #E0F2F1;
       border-radius: 4px;
+    }
+
+    .cell.new {
+      animation-duration: 0.4s;
+      animation-name: new-symbol;
+      animation-fill-mode: forwards;
+      animation-delay: 0.15s;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes new-symbol {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
     }
   }
 

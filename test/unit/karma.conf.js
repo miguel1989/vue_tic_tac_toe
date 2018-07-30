@@ -25,9 +25,26 @@ module.exports = function (config) {
     coverageReporter: {
       dir: './coverage',
       reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' }
-      ]
+        {type: 'lcov', subdir: '.'},
+        {type: 'text-summary'}
+      ],
+      check: {
+        global: {
+          statements: 60,
+          branches: 60,
+          functions: 60,
+          lines: 60
+        },
+        each: {
+          statements: 60,
+          branches: 60,
+          functions: 60,
+          lines: 60,
+          excludes: [
+            '**/*.vue'
+          ]
+        }
+      }
     }
   })
 }
